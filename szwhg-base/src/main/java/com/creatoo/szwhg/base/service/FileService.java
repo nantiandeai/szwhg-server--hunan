@@ -20,7 +20,7 @@ public class FileService {
     private String rootDir;
 
 
-    public String saveFile(FileType type,String filename,InputStream input) {
+    public String saveFile(FileType type, String filename, InputStream input) {
         try {
             String id = UUID.randomUUID().toString();
             String relativeDir=type+"/"+id.substring(0,1)+"/"+id.substring(1,2)+"/"+id.substring(2,3)+"/"+id.substring(3,4);

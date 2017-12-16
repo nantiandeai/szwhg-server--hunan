@@ -156,7 +156,7 @@ public class InformationService extends AbstractService {
         });
     }
 
-    public Page<Comment> findAllComments(String id,Pageable pageable){
+    public Page<Comment> findAllComments(String id, Pageable pageable){
         Information information = informationDao.findOne(id);
         List<Comment> comments =information.getComments();
         List<Comment> commentList = new ArrayList<>();

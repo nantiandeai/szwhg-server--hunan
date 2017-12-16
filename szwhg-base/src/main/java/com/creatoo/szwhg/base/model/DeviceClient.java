@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Document(collection = "BS_DEVICE")
 @ApiModel(value = "外部设备")
-public class DeviceClient extends IdEntity{
+public class DeviceClient extends IdEntity {
     @NotNull @ApiModelProperty(value = "设备名称")
     private String name;
     @NotNull @ApiModelProperty(value = "客户端id")

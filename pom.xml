@@ -8,6 +8,10 @@
         <module>szwhg-core</module>
         <module>szwhg-base</module>
         <module>szwhg-server</module>
+        <module>szwhg-user</module>
+        <module>szwyg-activity</module>
+        <module>szwhg-train</module>
+        <module>szwhg-venue</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -34,6 +38,26 @@
         <dependency>
             <groupId>com.creatoo.hn.szwhg</groupId>
             <artifactId>szwhg-base</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-user</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-venue</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-activity</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-train</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>

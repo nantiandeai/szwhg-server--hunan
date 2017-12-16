@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @Document(collection = "BS_ROLE")
 @ApiModel(value = "角色")
-public class Role extends IdEntity{
+public class Role extends IdEntity {
     @NotNull
     @ApiModelProperty(value = "编码")
     private String code;

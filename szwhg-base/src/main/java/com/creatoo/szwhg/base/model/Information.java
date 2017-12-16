@@ -22,7 +22,7 @@ import java.util.List;
 @Data
 @Document(collection = "BS_INFORMATION")
 @ApiModel(value = "资讯")
-public class Information extends IdEntity{
+public class Information extends IdEntity {
     @NotNull  @ApiModelProperty(value = "标题")
     private String title;
     @ApiModelProperty(value = "封面")

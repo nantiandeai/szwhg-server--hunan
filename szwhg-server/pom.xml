@@ -52,6 +52,22 @@
             <groupId>com.creatoo.hn.szwhg</groupId>
             <artifactId>szwhg-base</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-venue</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-user</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-activity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.creatoo.hn.szwhg</groupId>
+            <artifactId>szwhg-train</artifactId>
+        </dependency>
 
         <!-- swagger 静态资源 -->
         <dependency>

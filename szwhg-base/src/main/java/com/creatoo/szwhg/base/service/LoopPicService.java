@@ -75,7 +75,7 @@ public class LoopPicService {
         return loopPic.getContents();
     }
 
-    public LoopContent getLoopContent(LoopType type,String cid){
+    public LoopContent getLoopContent(LoopType type, String cid){
         LoopPic loopPic = picDao.findFirstByType(type);
         List<LoopContent> contents = loopPic.getContents();
         LoopContent loopContent = null;

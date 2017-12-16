@@ -65,7 +65,7 @@ public class LoopPicResource extends AbstractResource {
     @PUT
     @Path("/{type}/contents/{cid}")
     @ApiOperation(value = "编辑轮播图内容")
-    public Response modifyLoopContents(@PathParam("type") LoopType type, @PathParam("cid") String cid, LoopContent loopContent){
+    public Response modifyLoopContents(@PathParam("type") LoopType type,@PathParam("cid") String cid,LoopContent loopContent){
         picService.modifyContent(type,cid,loopContent);
         return this.successUpdate();
     }
@@ -73,7 +73,7 @@ public class LoopPicResource extends AbstractResource {
     @DELETE
     @Path("/{type}/contents/{cid}")
     @ApiOperation(value = "删除轮播图内容")
-    public Response deleteLoopContents(@PathParam("type") LoopType type, @PathParam("cid") String cid){
+    public Response deleteLoopContents(@PathParam("type") LoopType type,@PathParam("cid") String cid){
         picService.deleteContent(type,cid);
         return this.successDelete();
     }
@@ -89,7 +89,7 @@ public class LoopPicResource extends AbstractResource {
     @PUT
     @Path("/{type}/contents/{cid}/true")
     @ApiOperation(value = "启用轮播图内容")
-    public Response modifyLoopContentTrue(@PathParam("type") LoopType type, @PathParam("cid") String cid){
+    public Response modifyLoopContentTrue(@PathParam("type") LoopType type,@PathParam("cid") String cid){
         LoopContent loopContent = picService.getLoopContent(type,cid);
         loopContent.setEnable(true);
         picService.modifyContent(type,cid,loopContent);
@@ -99,7 +99,7 @@ public class LoopPicResource extends AbstractResource {
     @PUT
     @Path("/{type}/contents/{cid}/false")
     @ApiOperation(value = "停用轮播图内容")
-    public Response modifyLoopContentFalse(@PathParam("type") LoopType type, @PathParam("cid") String cid){
+    public Response modifyLoopContentFalse(@PathParam("type") LoopType type,@PathParam("cid") String cid){
         LoopContent loopContent = picService.getLoopContent(type,cid);
         loopContent.setEnable(false);
         picService.modifyContent(type,cid,loopContent);

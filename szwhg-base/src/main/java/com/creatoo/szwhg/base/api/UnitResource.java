@@ -40,7 +40,7 @@ public class UnitResource extends AbstractResource {
     @POST
     @Path("/{id}/children")
     @ApiOperation(value = "创建子组织")
-    public Response createChild(@PathParam("id") String id,@Valid @NotNull Unit unit){
+    public Response createChild(@PathParam("id") String id,@Valid @NotNull  Unit unit){
         Unit parent=unitService.getOne(id);
         if(parent==null) throw new BsException("父组织不存在");
         unit.setParent(parent);
@@ -60,7 +60,7 @@ public class UnitResource extends AbstractResource {
 
     @GET
     @ApiOperation(value = "查询组织机构列表")
-    public Page<Unit> findAll(@QueryParam("search") String search, @Pagination Pageable pageable){
+    public Page<Unit> findAll(@QueryParam("search") String search,@Pagination Pageable pageable){
         return unitService.findAll(search,pageable);
     }
 

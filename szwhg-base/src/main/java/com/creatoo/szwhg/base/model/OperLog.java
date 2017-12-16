@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @Document(collection = "BS_OPERLOG")
 @ApiModel(value = "操作日志")
-public class OperLog extends IdEntity{
+public class OperLog extends IdEntity {
     @ApiModelProperty(value = "文化馆id")
     private String unitId;
     @ApiModelProperty(value = "文化管名称")

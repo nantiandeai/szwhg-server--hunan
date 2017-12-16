@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 @Data
 @Document(collection = "BS_MESSAGE")
 @ApiModel(value = "消息")
-public class Message extends IdEntity{
+public class Message extends IdEntity {
     @ApiModelProperty(value = "发送方式")
-    private MsgChannel channel=MsgChannel.sms;
+    private MsgChannel channel= MsgChannel.sms;
     @ApiModelProperty(value = "接收人")
     private String receiver;
     @ApiModelProperty(value = "消息主体内容")
@@ -30,7 +30,7 @@ public class Message extends IdEntity{
     @ApiModelProperty(value = "验证码")
     private String verifyCode;
     @ApiModelProperty(value = "消息发送状态")
-    private MsgStatus status=MsgStatus.wait;
+    private MsgStatus status= MsgStatus.wait;
     @ApiModelProperty(value = "重试次数")
     private Integer retryCount=0;
     @ApiModelProperty(value = "最大重试次数")
