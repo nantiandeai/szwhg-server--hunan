@@ -115,7 +115,7 @@ public class UserResource extends AbstractResource{
         if(loginType== LoginType.mobile){
             String mobile=data.get("mobile");
             String password=data.get("password");
-            user= userInfoService.authticateUser(mobile,password);
+            user=userInfoService.authticateUser(mobile,password);
         }else if(loginType== LoginType.weixin){
             String wenxinId=data.get("uid");
             user= userInfoService.findByBind(BindType.valueOf(loginType.name()),wenxinId);

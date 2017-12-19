@@ -1,4 +1,4 @@
-package com.creatoo.szwhg.core.model;
+package com.creatoo.szwhg.base.model;
 
 import io.swagger.annotations.ApiModel;
 

@@ -1,6 +1,5 @@
 package com.creatoo.szwhg.base.model;
 
-import com.creatoo.szwhg.core.model.Comment;
 import com.creatoo.szwhg.core.model.IdEntity;
 import com.creatoo.szwhg.core.model.MyDateTimeDeserializer;
 import com.creatoo.szwhg.core.model.MytDateTimeSerializer;

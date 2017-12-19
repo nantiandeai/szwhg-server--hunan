@@ -82,9 +82,9 @@ public class UserInfoService {
     public User authticateUser(String mobile,String password){
         BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
         User user=userDao.findFirstByMobile(mobile);
-        if(user==null) return null;
-        if(encoder.matches(password,user.getPassword())) return user;
-        else return null;
+        if(user==null) throw new BsException("账号不存在");
+        if(!encoder.matches(password,user.getPassword())) throw new BsException("密码错误");
+        return user;
     }
 
     public User findByBind(BindType bindType, String account){

@@ -1,5 +1,7 @@
 package com.creatoo.szwhg.venue.service;
 
+import com.creatoo.szwhg.base.model.Comment;
+import com.creatoo.szwhg.base.model.CommentStatus;
 import com.creatoo.szwhg.base.service.FileService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.core.model.*;

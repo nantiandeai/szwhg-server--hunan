@@ -1,8 +1,8 @@
 package com.creatoo.szwhg.venue.api;
 
 import com.creatoo.szwhg.core.exception.BsException;
-import com.creatoo.szwhg.core.model.Comment;
-import com.creatoo.szwhg.core.model.CommentStatus;
+import com.creatoo.szwhg.base.model.Comment;
+import com.creatoo.szwhg.base.model.CommentStatus;
 import com.creatoo.szwhg.core.model.DigitInfo;
 import com.creatoo.szwhg.core.rest.AbstractResource;
 import com.creatoo.szwhg.core.rest.Pagination;
@@ -120,14 +120,6 @@ public class VenueResource  extends AbstractResource {
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id")String trainid,@Pagination Pageable pageable){
         return venueService.findAllComments(trainid,pageable);
-    }
-
-    @PUT
-    @Path("/{id}/comments/{commentid}/{commentStatus}")
-    @ApiOperation("审核评论")
-    public Response auditComment(@PathParam("id")String trainid, @PathParam("commentid") String commentid, @PathParam("commentStatus")CommentStatus commentStatus){
-        venueService.auditComment(trainid, commentid, commentStatus);
-        return this.successUpdate();
     }
 
     @POST @Path("/{id}/digitinfos")

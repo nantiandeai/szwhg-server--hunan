@@ -1,10 +1,15 @@
-package com.creatoo.szwhg.core.model;
+package com.creatoo.szwhg.base.model;
 
+import com.creatoo.szwhg.core.model.IdEntity;
+import com.creatoo.szwhg.core.model.MyDateTimeDeserializer;
+import com.creatoo.szwhg.core.model.MytDateTimeSerializer;
+import com.creatoo.szwhg.core.model.ResourceType;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
@@ -13,11 +18,13 @@ import java.time.LocalDateTime;
  * Created by wangxl on 2017/9/7.
  */
 @Data
+@Document(collection = "BS_COMMENT")
 @ApiModel("评论")
-public class Comment  {
-    @ApiModelProperty(value = "评论id", required = true)
-    private String id;
-
+public class Comment  extends IdEntity{
+    @ApiModelProperty(value = "资源类型", required = true)
+    private ResourceType type;
+    @ApiModelProperty(value = "评论对象Id")
+    private String objId;
     @ApiModelProperty(value = "用户id", required = true)
     private String userId;
 

@@ -3,6 +3,8 @@ package com.creatoo.szwhg.activity.service;
 import com.creatoo.szwhg.activity.dao.ActivityDao;
 import com.creatoo.szwhg.activity.dao.ActivityOrderDao;
 import com.creatoo.szwhg.activity.model.*;
+import com.creatoo.szwhg.base.model.Comment;
+import com.creatoo.szwhg.base.model.CommentStatus;
 import com.creatoo.szwhg.base.service.FileService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.core.model.*;

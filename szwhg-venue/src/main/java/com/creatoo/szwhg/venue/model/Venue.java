@@ -2,7 +2,7 @@ package com.creatoo.szwhg.venue.model;
 
 import com.creatoo.szwhg.base.model.Unit;
 import com.creatoo.szwhg.core.model.AuditEntity;
-import com.creatoo.szwhg.core.model.Comment;
+import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.core.model.Coordinate;
 import com.creatoo.szwhg.core.model.DigitInfo;
 import io.swagger.annotations.ApiModel;

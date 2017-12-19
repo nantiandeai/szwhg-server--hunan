@@ -4,6 +4,8 @@ import com.creatoo.szwhg.activity.model.Activity;
 import com.creatoo.szwhg.activity.model.ActivityItm;
 import com.creatoo.szwhg.activity.model.ActivityReserveStat;
 import com.creatoo.szwhg.activity.service.ActivityService;
+import com.creatoo.szwhg.base.model.Comment;
+import com.creatoo.szwhg.base.model.CommentStatus;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.core.model.*;
 import com.creatoo.szwhg.core.rest.AbstractResource;
@@ -289,14 +291,6 @@ public class ActivityResource extends AbstractResource {
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id") String trainid, @Pagination Pageable pageable) {
         return activityService.findAllComments(trainid, pageable);
-    }
-
-    @PUT
-    @Path("/{id}/comments/{commentid}/{commentStatus}")
-    @ApiOperation("审核评论")
-    public Response auditComment(@PathParam("id") String trainid, @PathParam("commentid") String commentid, @PathParam("commentStatus") CommentStatus commentStatus) {
-        activityService.auditComment(trainid, commentid, commentStatus);
-        return this.successUpdate();
     }
 
     @POST

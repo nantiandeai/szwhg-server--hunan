@@ -1,7 +1,7 @@
 package com.creatoo.szwhg.train.api;
 
-import com.creatoo.szwhg.core.model.Comment;
-import com.creatoo.szwhg.core.model.CommentStatus;
+import com.creatoo.szwhg.base.model.Comment;
+import com.creatoo.szwhg.base.model.CommentStatus;
 import com.creatoo.szwhg.core.model.FlowLog;
 import com.creatoo.szwhg.core.rest.AbstractResource;
 import com.creatoo.szwhg.core.rest.Pagination;
@@ -124,11 +124,4 @@ public class TrainResource extends AbstractResource {
         return trainService.findAllComments(trainid,pageable);
     }
 
-    @PUT
-    @Path("/{id}/comments/{commentid}/{commentStatus}")
-    @ApiOperation("审核评论")
-    public Response auditComment(@PathParam("id")String trainid, @PathParam("commentid") String commentid, @PathParam("commentStatus")CommentStatus commentStatus){
-        trainService.auditComment(trainid, commentid, commentStatus);
-        return this.successUpdate();
-    }
 }

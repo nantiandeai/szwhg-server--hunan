@@ -1,5 +1,7 @@
 package com.creatoo.szwhg.train.service;
 
+import com.creatoo.szwhg.base.model.Comment;
+import com.creatoo.szwhg.base.model.CommentStatus;
 import com.creatoo.szwhg.base.service.FileService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.core.model.*;
@@ -210,7 +212,7 @@ public class TrainService {
         });
     }
 
-    public Page<Comment> findAllComments(String id,Pageable pageable){
+    public Page<Comment> findAllComments(String id, Pageable pageable){
         Train train = trainDao.findOne(id);
         List<Comment> comments =train.getComments();
         List<Comment> commentList = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.creatoo.szwhg.train.model;
 
+import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CultureBrand;
 import com.creatoo.szwhg.base.model.Unit;
 import com.creatoo.szwhg.core.model.*;
