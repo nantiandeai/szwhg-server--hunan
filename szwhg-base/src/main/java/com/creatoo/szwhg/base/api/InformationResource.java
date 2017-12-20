@@ -7,6 +7,7 @@ import com.creatoo.szwhg.base.service.InformationService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
+import com.creatoo.szwhg.core.model.ResourceType;
 import com.creatoo.szwhg.core.rest.AbstractResource;
 import com.creatoo.szwhg.core.rest.ClientErrorMsg;
 import com.creatoo.szwhg.core.rest.Pagination;
@@ -128,6 +129,7 @@ public class InformationResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("添加评论")
     public Response addComment(@PathParam("id")String trainid,Comment comment){
+        comment.setType(ResourceType.Information);
         comment.setObjId(trainid);
         String commentid=commentService.addComment(comment);
         return this.successCreate(commentid);
@@ -145,8 +147,8 @@ public class InformationResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id")String trainid, @Pagination Pageable pageable){
-        String serach = "objId:"+trainid+",status:"+CommentStatus.Pass;
-        return commentService.findAll(serach,pageable);
+        String search = "objId:"+trainid+",status:"+CommentStatus.Pass;
+        return commentService.findAll(search,pageable);
     }
 
     @GET

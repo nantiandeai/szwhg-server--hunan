@@ -47,10 +47,9 @@ public class CommnetResource extends AbstractResource{
     }
 
     @POST
-    @Path("/{objId}/comments")
+    @Path("/comments")
     @ApiOperation("添加评论")
-    public Response addComment(@PathParam("objId")String objId,Comment comment){
-        comment.setObjId(objId);
+    public Response addComment(Comment comment){
         String commentid=commentService.addComment(comment);
         return this.successCreate(commentid);
     }

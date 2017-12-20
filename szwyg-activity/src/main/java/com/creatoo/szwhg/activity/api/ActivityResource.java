@@ -287,8 +287,8 @@ public class ActivityResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id") String trainid, @Pagination Pageable pageable) {
-        String serach = "objId:"+trainid+",status:"+CommentStatus.Pass;
-        return commentService.findAll(serach, pageable);
+        String search = "objId:"+trainid+",status:"+CommentStatus.Pass;
+        return commentService.findAll(search, pageable);
     }
 
     @POST
