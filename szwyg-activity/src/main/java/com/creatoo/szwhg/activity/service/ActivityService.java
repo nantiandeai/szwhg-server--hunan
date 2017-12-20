@@ -5,6 +5,7 @@ import com.creatoo.szwhg.activity.dao.ActivityOrderDao;
 import com.creatoo.szwhg.activity.model.*;
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
+import com.creatoo.szwhg.base.service.CommentService;
 import com.creatoo.szwhg.base.service.FileService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.core.model.*;
@@ -52,6 +53,8 @@ public class ActivityService {
     private UserInfoService userInfoService;
     @Autowired
     private UserActionService userActionService;
+    @Autowired
+    private CommentService commentService ;
 
     @Value("${comment.audit.isopen}")
     private Boolean auditIsopen;
@@ -262,7 +265,8 @@ public class ActivityService {
         String itmId=order.getItmId();
         ReserveType reserveType=order.getReserveType();
         if(reserveType!= ReserveType.none){
-            int sum=Optional.ofNullable(order.getReserveSum()).orElse(0);
+            int bookCount = this.queryCountUserOrder(actId,order.getUserId(),order.getItmId()) ;
+            int sum=Optional.ofNullable(order.getReserveSum()).orElse(order.getSeats().size()) + bookCount;
             if(sum>act.getPerAllow()) {
                 throw new BsException("超过单场允许人数");
             }
@@ -755,5 +759,17 @@ public class ActivityService {
         });
     }
 
+    public int queryCountUserOrder(String actId,String userId,String itmId) {
+        QActivityOrder qto = QActivityOrder.activityOrder;
+        List<ActivityOrder> list=new ArrayList<>();
+        this.orderDao.findAll(qto.userId.eq(userId).and(qto.itmId.eq(itmId)).and(qto.activityId.eq(actId))).forEach(order->list.add(order));
+        int count = 0 ;
+        if(list!=null && list.size() > 0) {
+            for(ActivityOrder order : list) {
+                count += order.getReserveSum() ;
+            }
+        }
+        return count ;
+    }
 
 }

@@ -6,6 +6,7 @@ import com.creatoo.szwhg.activity.model.ActivityReserveStat;
 import com.creatoo.szwhg.activity.service.ActivityService;
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
+import com.creatoo.szwhg.base.service.CommentService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.core.model.*;
 import com.creatoo.szwhg.core.rest.AbstractResource;
@@ -35,6 +36,8 @@ import java.util.List;
 public class ActivityResource extends AbstractResource {
     @Autowired
     private ActivityService activityService;
+    @Autowired
+    private CommentService commentService;
 
     @POST
     @ApiOperation("创建活动")
@@ -274,7 +277,9 @@ public class ActivityResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("添加评论")
     public Response addComment(@PathParam("id") String trainid, Comment comment) {
-        String commentid = activityService.addComment(trainid, comment);
+        comment.setType(ResourceType.Activity);
+        comment.setObjId(trainid);
+        String commentid = commentService.addComment(comment);
         return this.successCreate(commentid);
     }
 
@@ -282,7 +287,7 @@ public class ActivityResource extends AbstractResource {
     @Path("/{id}/comments/{commentid}")
     @ApiOperation("删除评论")
     public Response deleteComment(@PathParam("id") String trainid, @PathParam("commentid") String commentid) {
-        activityService.deleteComment(trainid, commentid);
+        commentService.deleteComment(commentid);
         return this.successDelete();
     }
 
@@ -290,7 +295,8 @@ public class ActivityResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id") String trainid, @Pagination Pageable pageable) {
-        return activityService.findAllComments(trainid, pageable);
+        String serach = "objId:"+trainid+",status:"+CommentStatus.Pass;
+        return commentService.findAll(serach, pageable);
     }
 
     @POST
