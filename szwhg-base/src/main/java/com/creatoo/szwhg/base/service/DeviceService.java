@@ -17,7 +17,6 @@ public class DeviceService {
     private DeviceClientDao deviceDao;
 
     public String createDevice(DeviceClient device){
-        device.setScopes(new String[]{"read","write"});
         deviceDao.save(device);
         return device.getId();
     }
