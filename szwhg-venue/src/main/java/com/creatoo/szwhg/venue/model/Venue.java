@@ -46,8 +46,6 @@ public class Venue extends AuditEntity {
     private Boolean isRecommend;
     @ApiModelProperty(value = "是否发布")
     private Boolean isPublish;
-    @ApiModelProperty(value = "评论")
-    private List<Comment> comments;
     @NotNull @ApiModelProperty(value = "简介")
     private String brief;
     @ApiModelProperty(value = "数字资源")

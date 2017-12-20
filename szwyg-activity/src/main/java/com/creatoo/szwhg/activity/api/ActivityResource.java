@@ -283,14 +283,6 @@ public class ActivityResource extends AbstractResource {
         return this.successCreate(commentid);
     }
 
-    @DELETE
-    @Path("/{id}/comments/{commentid}")
-    @ApiOperation("删除评论")
-    public Response deleteComment(@PathParam("id") String trainid, @PathParam("commentid") String commentid) {
-        commentService.deleteComment(commentid);
-        return this.successDelete();
-    }
-
     @GET
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
