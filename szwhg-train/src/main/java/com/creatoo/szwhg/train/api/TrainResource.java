@@ -2,7 +2,9 @@ package com.creatoo.szwhg.train.api;
 
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
+import com.creatoo.szwhg.base.service.CommentService;
 import com.creatoo.szwhg.core.model.FlowLog;
+import com.creatoo.szwhg.core.model.ResourceType;
 import com.creatoo.szwhg.core.rest.AbstractResource;
 import com.creatoo.szwhg.core.rest.Pagination;
 import com.creatoo.szwhg.train.model.Train;
@@ -32,6 +34,8 @@ public class TrainResource extends AbstractResource {
      */
     @Autowired
     private TrainService trainService;
+    @Autowired
+    private CommentService commentService ;
 
 
     @GET
@@ -105,7 +109,9 @@ public class TrainResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("添加评论")
     public Response addComment(@PathParam("id")String trainid,Comment comment){
-        String commentid=trainService.addComment(trainid, comment);
+        comment.setObjId(trainid);
+        comment.setType(ResourceType.Train);
+        String commentid=commentService.addComment(comment);
         return this.successCreate(commentid);
     }
 
@@ -113,7 +119,7 @@ public class TrainResource extends AbstractResource {
     @Path("/{id}/comments/{commentid}")
     @ApiOperation("删除评论")
     public Response deleteComment(@PathParam("id")String trainid,@PathParam("commentid") String commentid){
-        trainService.deleteComment(trainid, commentid);
+        commentService.deleteComment(trainid);
         return this.successDelete();
     }
 
@@ -121,7 +127,8 @@ public class TrainResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id")String trainid,@Pagination Pageable pageable){
-        return trainService.findAllComments(trainid,pageable);
+        String search = "objId:"+trainid+",status:"+CommentStatus.Pass;
+        return commentService.findAll(search,pageable);
     }
 
 }

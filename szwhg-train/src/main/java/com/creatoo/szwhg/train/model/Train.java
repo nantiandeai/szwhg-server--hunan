@@ -113,9 +113,6 @@ public class Train extends AuditEntity {
     @ApiModelProperty(value = "活动室")
     private VenueRoom venueRoom;
 
-    @ApiModelProperty(value = "培训评论列表")
-    private List<Comment> comments;
-
     @ApiModelProperty(value = "流程信息列表")
     private List<FlowLog> flowLogs;
 

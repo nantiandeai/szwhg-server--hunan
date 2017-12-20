@@ -93,8 +93,6 @@ public class Activity extends AuditEntity {
     private List<FlowLog> flowLogs;
     @JsonIgnore @ApiModelProperty(value = "调查问卷")
     private Research research;
-    @JsonIgnore @ApiModelProperty(value = "评论")
-    private List<Comment> comments;
     @ApiModelProperty(value = "简介")
     private String brief;
     @DBRef @ApiModelProperty(value = "所属文化品牌")

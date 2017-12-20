@@ -5,6 +5,7 @@ import com.creatoo.szwhg.activity.dao.ActivityOrderDao;
 import com.creatoo.szwhg.activity.model.*;
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
+import com.creatoo.szwhg.base.service.CommentService;
 import com.creatoo.szwhg.base.service.FileService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.core.model.*;
@@ -52,6 +53,8 @@ public class ActivityService {
     private UserInfoService userInfoService;
     @Autowired
     private UserActionService userActionService;
+    @Autowired
+    private CommentService commentService ;
 
     @Value("${comment.audit.isopen}")
     private Boolean auditIsopen;
@@ -262,7 +265,8 @@ public class ActivityService {
         String itmId=order.getItmId();
         ReserveType reserveType=order.getReserveType();
         if(reserveType!= ReserveType.none){
-            int sum=Optional.ofNullable(order.getReserveSum()).orElse(0);
+            int bookCount = this.queryCountUserOrder(actId,order.getUserId(),order.getItmId()) ;
+            int sum=Optional.ofNullable(order.getReserveSum()).orElse(order.getSeats().size()) + bookCount;
             if(sum>act.getPerAllow()) {
                 throw new BsException("超过单场允许人数");
             }
@@ -577,73 +581,6 @@ public class ActivityService {
     }
 
     /**
-     *  添加评论
-     * @param trainId
-     * @param comment
-     * @return
-     */
-    public String  addComment(String trainId,Comment comment){
-        Activity activity=activityDao.findOne(trainId);
-        if(activity==null) {
-            throw new BsException("活动不存在");
-        }
-        List<Comment> comments=activity.getComments();
-        if (comments == null) {
-            comments = new ArrayList<>();
-            activity.setComments(comments);
-        }
-        String commentid= UUID.randomUUID().toString();
-        comment.setId(commentid);
-        comment.setTime(LocalDateTime.now());
-        comments.add(comment);
-        if (auditIsopen){
-            comment.setStatus(CommentStatus.Wait);
-        }else{
-            comment.setStatus(CommentStatus.Pass);
-        }
-        activityDao.save(activity);
-        return commentid;
-    }
-
-    public void deleteComment(String trainId,String commentid){
-        Activity activity=activityDao.findOne(trainId);
-        Optional.ofNullable(activity).map(t->t.getComments()).orElse(new ArrayList<>())
-                .stream().filter(c->c.getId().equals(commentid)).findFirst().ifPresent(comment->{
-            activity.getComments().remove(comment);
-            activityDao.save(activity);
-        });
-
-    }
-
-    public void auditComment(String traintid,String commentid,CommentStatus commentStatus){
-        Activity activity=activityDao.findOne(traintid);
-        Optional.ofNullable(activity).map(t->t.getComments()).orElse(new ArrayList<>())
-                .stream().filter(c->c.getId().equals(commentid)).findFirst().ifPresent(comment->{
-            comment.setStatus(commentStatus);
-            activityDao.save(activity);
-        });
-    }
-
-    public Page<Comment> findAllComments(String id,Pageable pageable){
-        Activity activity = activityDao.findOne(id);
-        List<Comment> comments =activity.getComments();
-        List<Comment> commentList = new ArrayList<>();
-        int total = 0;
-        if (comments != null && comments.size()>0) {
-            int start = pageable.getOffset();
-            int end = (start + pageable.getPageSize()) > comments.size() ? comments.size() : (start + pageable.getPageSize());
-            if (comments != null && comments.size() > 0 && end > start) {
-                comments.sort((o1, o2) -> {
-                    return o2.getTime().compareTo(o1.getTime());
-                });
-                commentList = comments.subList(start, end);
-                total = comments.size();
-            }
-        }
-        return new PageImpl<Comment>(commentList,pageable,total);
-    }
-
-    /**
      *  提交问卷
      * @param id
      * @param sheet
@@ -755,5 +692,17 @@ public class ActivityService {
         });
     }
 
+    public int queryCountUserOrder(String actId,String userId,String itmId) {
+        QActivityOrder qto = QActivityOrder.activityOrder;
+        List<ActivityOrder> list=new ArrayList<>();
+        this.orderDao.findAll(qto.userId.eq(userId).and(qto.itmId.eq(itmId)).and(qto.activityId.eq(actId))).forEach(order->list.add(order));
+        int count = 0 ;
+        if(list!=null && list.size() > 0) {
+            for(ActivityOrder order : list) {
+                count += order.getReserveSum() ;
+            }
+        }
+        return count ;
+    }
 
 }

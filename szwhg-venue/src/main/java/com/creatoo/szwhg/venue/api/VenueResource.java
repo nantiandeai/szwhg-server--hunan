@@ -1,9 +1,11 @@
 package com.creatoo.szwhg.venue.api;
 
+import com.creatoo.szwhg.base.service.CommentService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
 import com.creatoo.szwhg.core.model.DigitInfo;
+import com.creatoo.szwhg.core.model.ResourceType;
 import com.creatoo.szwhg.core.rest.AbstractResource;
 import com.creatoo.szwhg.core.rest.Pagination;
 import com.creatoo.szwhg.venue.model.Venue;
@@ -32,6 +34,8 @@ import java.util.List;
 public class VenueResource  extends AbstractResource {
     @Autowired
     private VenueService venueService;
+    @Autowired
+    private CommentService commentService ;
 
     @POST
     @ApiOperation(value = "创建场馆")
@@ -103,7 +107,9 @@ public class VenueResource  extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("添加评论")
     public Response addComment(@PathParam("id")String venId,Comment comment){
-        String commentid=venueService.addComment(venId, comment);
+        comment.setObjId(venId);
+        comment.setType(ResourceType.Venue);
+        String commentid=commentService.addComment(comment);
         return this.successCreate(commentid);
     }
 
@@ -111,7 +117,7 @@ public class VenueResource  extends AbstractResource {
     @Path("/{id}/comments/{commentid}")
     @ApiOperation("删除评论")
     public Response deleteComment(@PathParam("id")String venId,@PathParam("commentid") String commentid){
-        venueService.deleteComment(venId, commentid);
+        commentService.deleteComment(commentid);
         return this.successDelete();
     }
 
@@ -119,7 +125,8 @@ public class VenueResource  extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id")String trainid,@Pagination Pageable pageable){
-        return venueService.findAllComments(trainid,pageable);
+        String search = "objId:"+trainid+",status:"+CommentStatus.Pass;
+        return commentService.findAll(search,pageable);
     }
 
     @POST @Path("/{id}/digitinfos")
