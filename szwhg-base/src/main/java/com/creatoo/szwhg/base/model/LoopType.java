@@ -7,5 +7,5 @@ import io.swagger.annotations.ApiModel;
  */
 @ApiModel(value = "轮播图类型")
 public enum LoopType {
-    pcIndex,weixinIndex,weixinActivity,weixinInfo,weixinArt
+    pcIndex,weixinIndex,weixinActivity,weixinInfo,weixinArt,pcdigitalshow
 }
