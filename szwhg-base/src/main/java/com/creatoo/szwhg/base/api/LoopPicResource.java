@@ -44,8 +44,8 @@ public class LoopPicResource extends AbstractResource {
     @GET
     @Path("/{type}/contents")
     @ApiOperation(value = "获取轮播图内容列表")
-    public List<LoopContent> getLoopContents(@PathParam("type") LoopType type){
-        return picService.getContents(type);
+    public List<LoopContent> getLoopContents(@PathParam("type") LoopType type, @QueryParam("enable") String enable) {
+        return picService.getContents(type, enable);
     }
 
     @POST

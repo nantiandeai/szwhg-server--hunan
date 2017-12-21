@@ -70,9 +70,19 @@ public class LoopPicService {
         });
     }
 
-    public List<LoopContent> getContents(LoopType type){
+    public List<LoopContent> getContents(LoopType type, String enable) {
         LoopPic loopPic = picDao.findFirstByType(type);
-        return loopPic.getContents();
+        if (enable == null) {
+            return loopPic.getContents();
+        } else {
+            List<LoopContent> list = new ArrayList();
+            for (LoopContent pic : loopPic.getContents()) {
+                if (pic.getEnable().equals(Boolean.valueOf(enable))) {
+                    list.add(pic);
+                }
+            }
+            return list;
+        }
     }
 
     public LoopContent getLoopContent(LoopType type, String cid){
