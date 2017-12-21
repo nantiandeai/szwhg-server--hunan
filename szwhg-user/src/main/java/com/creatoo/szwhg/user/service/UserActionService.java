@@ -142,15 +142,17 @@ public class UserActionService {
         return result;
     }
 
-    public String createIdentifyApply(IdentifyApply apply){
+    public String createIdentifyApply(IdentifyApply apply) {
         apply.setIdentifyStatus(IdentifyStatus.Wait);
         apply.setCreateTime(LocalDateTime.now());
         applyDao.save(apply);
-        User user=userDao.findOne(apply.getUserId());
-        if(apply.getIsSelf()) user.setIdentifyStatus(IdentifyStatus.Wait);
-        else{
-            for(FamilyMember member:user.getMembers()){
-                if(member.getIdNumber().equals(apply.getIdnumber())){
+        User user = userDao.findOne(apply.getUserId());
+        if (apply.getIsSelf()) {
+            user.setIdentifyStatus(IdentifyStatus.Wait);
+        } else {
+            if (user.getMembers() == null) throw new BsException("常用联系人为空");
+            for (FamilyMember member : user.getMembers()) {
+                if (member.getIdNumber().equals(apply.getIdnumber())) {
                     member.setIdentifyStatus(IdentifyStatus.Wait);
                 }
             }
