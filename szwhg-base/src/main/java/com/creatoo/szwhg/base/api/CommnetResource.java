@@ -2,7 +2,6 @@ package com.creatoo.szwhg.base.api;
 
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
-import com.creatoo.szwhg.base.model.Information;
 import com.creatoo.szwhg.base.service.CommentService;
 import com.creatoo.szwhg.core.rest.AbstractResource;
 import com.creatoo.szwhg.core.rest.Pagination;
@@ -38,4 +37,21 @@ public class CommnetResource extends AbstractResource{
         commentService.auditComment(id,status);
         return this.successUpdate();
     }
+
+    @DELETE
+    @Path("/comments/{commentid}")
+    @ApiOperation("删除评论")
+    public Response deleteComment(@PathParam("commentid") String commentid){
+        commentService.deleteComment(commentid);
+        return this.successDelete();
+    }
+
+    @POST
+    @Path("/comments")
+    @ApiOperation("添加评论")
+    public Response addComment(Comment comment){
+        String commentid=commentService.addComment(comment);
+        return this.successCreate(commentid);
+    }
+
 }

@@ -172,65 +172,6 @@ public class TrainService {
         return list;
     }
 
-    public String  addComment(String trainId,Comment comment){
-        Train train=trainDao.findOne(trainId);
-        if(train==null) throw new BsException("");
-        List<Comment> comments=train.getComments();
-        if (comments == null) {
-            comments = new ArrayList<>();
-            train.setComments(comments);
-        }
-        String commentid=UUID.randomUUID().toString();
-        comment.setId(commentid);
-        comment.setTime(LocalDateTime.now());
-        comments.add(comment);
-        if (auditIsopen){
-            comment.setStatus(CommentStatus.Wait);
-        }else{
-            comment.setStatus(CommentStatus.Pass);
-        }
-        trainDao.save(train);
-        return commentid;
-    }
-
-    public void deleteComment(String trainId,String commentid){
-        Train train=trainDao.findOne(trainId);
-        Optional.ofNullable(train).map(t->t.getComments()).orElse(new ArrayList<>())
-                .stream().filter(c->c.getId().equals(commentid)).findFirst().ifPresent(comment->{
-                    train.getComments().remove(comment);
-                    trainDao.save(train);
-        });
-
-    }
-
-    public void auditComment(String traintid,String commentid,CommentStatus commentStatus){
-        Train train=trainDao.findOne(traintid);
-        Optional.ofNullable(train).map(t->t.getComments()).orElse(new ArrayList<>())
-                .stream().filter(c->c.getId().equals(commentid)).findFirst().ifPresent(comment->{
-                    comment.setStatus(commentStatus);
-                    trainDao.save(train);
-        });
-    }
-
-    public Page<Comment> findAllComments(String id, Pageable pageable){
-        Train train = trainDao.findOne(id);
-        List<Comment> comments =train.getComments();
-        List<Comment> commentList = new ArrayList<>();
-        int total = 0;
-        if (comments != null && comments.size()>0) {
-            int start = pageable.getOffset();
-            int end = (start + pageable.getPageSize()) > comments.size() ? comments.size() : (start + pageable.getPageSize());
-            if (comments != null && comments.size() > 0 && end > start) {
-                comments.sort((o1, o2) -> {
-                    return o2.getTime().compareTo(o1.getTime());
-                });
-                commentList = comments.subList(start, end);
-                total = comments.size();
-            }
-        }
-        return new PageImpl<Comment>(commentList,pageable,total);
-    }
-
     /**
      * 定时发布预定库存，每隔30秒执行一次发送任务
      */

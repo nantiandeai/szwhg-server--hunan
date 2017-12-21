@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class Comment  extends IdEntity{
     @ApiModelProperty(value = "资源类型", required = true)
     private ResourceType type;
-    @ApiModelProperty(value = "评论对象Id")
+    @ApiModelProperty(value = "评论对象Id" ,required = true)
     private String objId;
     @ApiModelProperty(value = "用户id", required = true)
     private String userId;

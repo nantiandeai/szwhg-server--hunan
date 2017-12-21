@@ -2,10 +2,12 @@ package com.creatoo.szwhg.base.api;
 
 import com.creatoo.szwhg.base.model.Column;
 import com.creatoo.szwhg.base.model.Information;
+import com.creatoo.szwhg.base.service.CommentService;
 import com.creatoo.szwhg.base.service.InformationService;
 import com.creatoo.szwhg.core.exception.BsException;
 import com.creatoo.szwhg.base.model.Comment;
 import com.creatoo.szwhg.base.model.CommentStatus;
+import com.creatoo.szwhg.core.model.ResourceType;
 import com.creatoo.szwhg.core.rest.AbstractResource;
 import com.creatoo.szwhg.core.rest.ClientErrorMsg;
 import com.creatoo.szwhg.core.rest.Pagination;
@@ -34,6 +36,8 @@ import java.util.List;
 public class InformationResource extends AbstractResource {
     @Autowired
     private InformationService informationService;
+    @Autowired
+    private CommentService commentService ;
 
     @POST
     @ApiOperation(value = "创建资讯")
@@ -125,7 +129,9 @@ public class InformationResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("添加评论")
     public Response addComment(@PathParam("id")String trainid,Comment comment){
-        String commentid=informationService.addComment(trainid, comment);
+        comment.setType(ResourceType.Information);
+        comment.setObjId(trainid);
+        String commentid=commentService.addComment(comment);
         return this.successCreate(commentid);
     }
 
@@ -133,7 +139,7 @@ public class InformationResource extends AbstractResource {
     @Path("/{id}/comments/{commentid}")
     @ApiOperation("删除评论")
     public Response deleteComment(@PathParam("id")String trainid,@PathParam("commentid") String commentid){
-        informationService.deleteComment(trainid, commentid);
+        commentService.deleteComment(commentid);
         return this.successDelete();
     }
 
@@ -141,15 +147,8 @@ public class InformationResource extends AbstractResource {
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id")String trainid, @Pagination Pageable pageable){
-        return informationService.findAllComments(trainid,pageable);
-    }
-
-    @PUT
-    @Path("/{id}/comments/{commentid}/{commentStatus}")
-    @ApiOperation("审核评论")
-    public Response auditComment(@PathParam("id")String trainid, @PathParam("commentid") String commentid, @PathParam("commentStatus")CommentStatus commentStatus){
-        informationService.auditComment(trainid, commentid, commentStatus);
-        return this.successUpdate();
+        String search = "objId:"+trainid+",status:"+CommentStatus.Pass;
+        return commentService.findAll(search,pageable);
     }
 
     @GET

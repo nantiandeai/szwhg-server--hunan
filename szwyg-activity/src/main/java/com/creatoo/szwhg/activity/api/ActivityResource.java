@@ -283,20 +283,12 @@ public class ActivityResource extends AbstractResource {
         return this.successCreate(commentid);
     }
 
-    @DELETE
-    @Path("/{id}/comments/{commentid}")
-    @ApiOperation("删除评论")
-    public Response deleteComment(@PathParam("id") String trainid, @PathParam("commentid") String commentid) {
-        commentService.deleteComment(commentid);
-        return this.successDelete();
-    }
-
     @GET
     @Path("/{id}/comments")
     @ApiOperation("获取评论列表")
     public Page<Comment> getComments(@PathParam("id") String trainid, @Pagination Pageable pageable) {
-        String serach = "objId:"+trainid+",status:"+CommentStatus.Pass;
-        return commentService.findAll(serach, pageable);
+        String search = "objId:"+trainid+",status:"+CommentStatus.Pass;
+        return commentService.findAll(search, pageable);
     }
 
     @POST
