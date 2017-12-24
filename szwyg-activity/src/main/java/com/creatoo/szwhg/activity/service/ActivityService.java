@@ -70,7 +70,7 @@ public class ActivityService {
      */
     public String createActivity(Activity act) {
         act.setCreateTime(LocalDateTime.now());
-        act.setOnlineStatus(OnlineStatus.WaitAudit);
+        act.setOnlineStatus(OnlineStatus.WaitCommit);
         if (act.getVenueRoom() != null) {
             VenueRoom venueRoom = roomDao.findOne(act.getVenueRoom().getId());
             act.setVenueRoom(venueRoom);
